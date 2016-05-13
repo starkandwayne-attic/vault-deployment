@@ -1,0 +1,7 @@
+---
+name: (( param "Please define the deployment name in the environment templates" ))
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  serial: true
