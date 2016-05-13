@@ -1,0 +1,24 @@
+---
+resource_pools:
+  - name: small
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+
+    cloud_properties:
+      cpu:  1
+      ram:  1024
+      disk: 2048
+
+compilation:
+  network: vault
+  workers: 1
+  reuse_compilation_vms: true
+
+  cloud_properties:
+    cpu:  2
+    ram:  2048
+    disk: 4096
+
+jobs:
+  - name: vault
+    resource_pool: small
