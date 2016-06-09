@@ -1,0 +1,20 @@
+---
+resource_pools:
+  - name: small
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+
+    cloud_properties:
+      instance_type: m3.medium
+
+compilation:
+  network: vault
+  workers: 1
+  reuse_compilation_vms: true
+
+  cloud_properties:
+    instance_type: m3.large
+
+jobs:
+  - name: vault
+    resource_pool: small
