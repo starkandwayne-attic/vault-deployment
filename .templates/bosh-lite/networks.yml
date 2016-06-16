@@ -1,6 +1,6 @@
 ---
 networks:
-- name: concourse
+- name: vault
   type: manual
   subnets:
   - range: 10.244.8.0/24
