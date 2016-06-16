@@ -5,16 +5,19 @@ jobs:
   .: (( inject meta.jobs.vault ))
   networks:
   - name: vault_z1
+    static_ips: (( static_ips(0, 1) ))
   resource_pool: small_z1
 - name: vault_z2
   instances: 1
   .: (( inject meta.jobs.vault ))
   networks:
   - name: vault_z2
+    static_ips: (( static_ips(0, 1) ))
   resource_pool: small_z2
 - name: vault_z3
   instances: 1
   .: (( inject meta.jobs.vault ))
   networks:
   - name: vault_z3
+    static_ips: (( static_ips(0, 1) ))
   resource_pool: small_z3
