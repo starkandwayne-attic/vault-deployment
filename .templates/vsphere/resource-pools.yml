@@ -16,7 +16,7 @@ resource_pools:
       disk: 2048
       datacenters:
       - clusters:
-        - (( meta.vcenter.clusters.z1 ))
+        - (( grab meta.vcenter.clusters.z1 ))
   - name: small_z2
     network: vault_z2
     stemcell: (( grab meta.stemcell ))
@@ -26,7 +26,7 @@ resource_pools:
       disk: 2048
       datacenters:
       - clusters:
-        - (( meta.vcenter.clusters.z2 ))
+        - (( grab meta.vcenter.clusters.z2 ))
   - name: small_z2
     network: vault_z3
     stemcell: (( grab meta.stemcell ))
@@ -36,7 +36,7 @@ resource_pools:
       disk: 2048
       datacenters:
       - clusters:
-        - (( meta.vcenter.clusters.z3 ))
+        - (( grab meta.vcenter.clusters.z3 ))
 
 compilation:
   network: vault_z1
@@ -48,4 +48,4 @@ compilation:
     disk: 4096
     datacenters:
     - clusters:
-      - (( meta.vcenter.clusters.z1 ))
+      - (( grab meta.vcenter.clusters.z1 ))
