@@ -1,45 +1,65 @@
-vault Deployments
-==============================
+Vault Deployment Template
+======================================
 
-This repository contains the YAML templates that make up a series of
-vault BOSH deployments, using the format prescribed by the
-[Genesis][1] utility.
+This repository acts as an upstream repository of YAML templates for use
+in deploying one or more Vault clusters, via the [Gensis][1] utility.
 
-The configuration is broken up into three logical strata: _global_,
-_site_, and _environment_.  _Global_ defines the universal aspects of any
-deployment, including overall job structure, constituent BOSH releases,
-and invariant (or default) properties.  Each _site_ represents a single
-IaaS (an AWS VPC, a vSphere cluster, etc.), and further refines the global
-configuration for that infrastructure.  Each _environment_ represents a
-single BOSH deployment, with specific network numbering, credentials,
-domain names, etc.
 
-For more information, see the READMEs scattered throughout this repository,
-and check out `genesis help`.  You can download the Genesis program from
-[Github][1]
 
-Quickstart
-----------
+Creating a new Vault Deployment
+======================================
 
-To create a new site:
+To create a new [Genesis][1]-based deployment of Vault, run
 
-    genesis new site NAME
+    genesis new deployment --template vault
 
-To create a new environment
+This will create a new repo called `vault-deployments` for you, and
+pull in the `github.com/starkandwayne/vault-deployment` repo as the
+`upstream` remote, copying the contents of `global/*` into the new
+`vault-deployments` repository.
 
-    cd site-name/
-    genesis new environment NAME
+This allows you to easily diverge from the upstream templates to suit your
+environment, yet still be able to pull in changes from upstream down
+the road.
 
-To build the full BOSH manifest for an environment:
 
-    cd site-name/env-name
-    make manifest
 
-... and then deploy it:
+BOSH-Lite Sites
+======================================
 
-    cd site-name/env-name
-    make deploy
+The `bosh-lite` template will set you up with a structure suitable
+for deploying Vault on a BOSH-Lite.
 
+    genesis new site --tempalte bosh-lite <name>
+
+
+
+vSphere Sites
+======================================
+
+The `vsphere` template will set you up with a structure suitable
+for deploying Vault on a VMWare vSphere ESXi cluster.
+
+    genesis new site --template vsphere <name>
+
+
+
+Amazon EC2 (AWS) Sites
+======================================
+
+The `aws` template will set you up with a structure suitable for
+deploying Vault to Amazon Web Service's EC2/VPC
+infrastructure.
+
+    genesis new site --template aws <name>
+
+
+
+Notes
+======================================
+
+For more information, check out the [Genesis][1] repo, or `genesis help`.
+You can download the Genesis program from [Github][1]
 
 
 

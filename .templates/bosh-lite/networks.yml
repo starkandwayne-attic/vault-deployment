@@ -1,0 +1,15 @@
+---
+networks:
+- name: concourse
+  type: manual
+  subnets:
+  - range: 10.244.8.0/24
+    gateway: 10.244.8.1
+    static:
+    - 10.244.8.2 - 10.244.8.60
+
+jobs:
+- name: vault
+  networks:
+  - name: vault
+    static_ips: (( static_ips 0, 1, 2, 3, 5 ))
