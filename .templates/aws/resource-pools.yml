@@ -8,26 +8,26 @@ meta:
 
 resource_pools:
   - name: small_z1
-    network: vault
+    network: vault_z1
     stemcell: (( grab meta.stemcell ))
     cloud_properties:
       instance_type: m3.medium
       availability_zone: (( grab meta.aws.azs.z1 ))
   - name: small_z2
-    network: vault
+    network: vault_z2
     stemcell: (( grab meta.stemcell ))
     cloud_properties:
       instance_type: m3.medium
       availability_zone: (( grab meta.aws.azs.z2))
   - name: small_z3
-    network: vault
+    network: vault_z3
     stemcell: (( grab meta.stemcell ))
     cloud_properties:
       instance_type: m3.medium
       availability_zone: (( grab meta.aws.azs.z3 ))
 
 compilation:
-  network: vault
+  network: vault_z1
   workers: 1
   reuse_compilation_vms: true
 
