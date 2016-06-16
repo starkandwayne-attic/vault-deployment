@@ -1,11 +1,30 @@
 ---
+meta:
+  aws:
+    azs:
+      z1: (( param "Define the z1 AWS availability zone" ))
+      z2: (( param "Define the z2 AWS availability zone" ))
+      z3: (( param "Define the z3 AWS availability zone" ))
+
 resource_pools:
-  - name: small
+  - name: small_z1
     network: vault
     stemcell: (( grab meta.stemcell ))
-
     cloud_properties:
       instance_type: m3.medium
+      availability_zone: (( grab meta.aws.azs.z1 ))
+  - name: small_z2
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      instance_type: m3.medium
+      availability_zone: (( grab meta.aws.azs.z2))
+  - name: small_z3
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      instance_type: m3.medium
+      availability_zone: (( grab meta.aws.azs.z3 ))
 
 compilation:
   network: vault
@@ -13,8 +32,5 @@ compilation:
   reuse_compilation_vms: true
 
   cloud_properties:
-    instance_type: m3.large
-
-jobs:
-  - name: vault
-    resource_pool: small
+    instance_type: c4.large
+    availability_zone: (( grab meta.aws.azs.z1 ))

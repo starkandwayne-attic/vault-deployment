@@ -1,1 +1,5 @@
---- {}
+---
+jobs:
+- name: vault
+  instances: 3
+  .: (( inject meta.jobs.vault ))

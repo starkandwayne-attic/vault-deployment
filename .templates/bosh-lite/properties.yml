@@ -1,1 +1,3 @@
---- {}
+---
+meta:
+  vault_servers: (( grab jobs.vault.networks.vault.static_ips ))

@@ -1,1 +1,11 @@
---- {}
+---
+networks:
+- name: vault_z1
+  type: manual
+  subnets: (( param "Specify the z1 network for vault" ))
+- name: vault_z2
+  type: manual
+  subnets: (( param "Specify the z2 network for vault" ))
+- name: vault_z3
+  type: manual
+  subnets: (( param "Specify the z3 network for vault" ))

@@ -1,1 +1,3 @@
---- {}
+---
+meta:
+  vault_servers: (( grab jobs.vault_z1.networks.vault_z1.static_ips jobs.vault_z2.networks.vault_z2.static_ips jobs.vault_z3.networks.vault_z3.static_ips ))

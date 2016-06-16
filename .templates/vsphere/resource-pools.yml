@@ -1,24 +1,51 @@
 ---
+meta:
+  vcenter:
+    clusters:
+      z1: (( param "Define the cluster/resource pool config for z1" ))
+      z2: (( param "Define the cluster/resource pool config for z2" ))
+      z3: (( param "Define the cluster/resource pool config for z3" ))
+
 resource_pools:
-  - name: small
+  - name: small_z1
     network: vault
     stemcell: (( grab meta.stemcell ))
-
     cloud_properties:
       cpu:  1
       ram:  1024
       disk: 2048
+      datacenters:
+      - clusters:
+        - (( meta.vcenter.clusters.z1 ))
+  - name: small_z2
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      cpu:  1
+      ram:  1024
+      disk: 2048
+      datacenters:
+      - clusters:
+        - (( meta.vcenter.clusters.z2 ))
+  - name: small_z2
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      cpu:  1
+      ram:  1024
+      disk: 2048
+      datacenters:
+      - clusters:
+        - (( meta.vcenter.clusters.z3 ))
 
 compilation:
-  network: vault
+  network: vault_z1
   workers: 1
   reuse_compilation_vms: true
-
   cloud_properties:
     cpu:  2
     ram:  2048
     disk: 4096
-
-jobs:
-  - name: vault
-    resource_pool: small
+    datacenters:
+    - clusters:
+      - (( meta.vcenter.clusters.z1 ))
