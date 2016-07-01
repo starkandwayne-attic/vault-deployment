@@ -1,0 +1,54 @@
+#!/bin/bash
+
+echo
+echo
+echo -n "Do you need a self-signed certificate for this Vault environment?  [yes/no] "
+read CONFIRM
+case ${CONFIRM} in
+(yes)
+	echo
+	echo "OK"
+	echo
+
+	where=${DEPLOYMENT_ROOT}/${DEPLOYMENT_SITE}/${DEPLOYMENT_ENVIRONMENT}/.tls
+	mkdir ${where}
+	echo "Creating a signing authority"
+	cat > ${where}/openssl.conf <<EOF
+[ req ]
+default_bits       = 2048
+default_md         = sha256
+string_mask        = nombstr
+distinguished_name = req_dn
+req_extensions     = v3_req
+
+[ req_dn ]
+commonName     = Vault FQDN
+commonName_max = 256
+
+[ v3_req ]
+basicConstraints     = CA:FALSE
+subjectKeyIdentifier = hash
+EOF
+	(set -ex
+	openssl req -x509 -newkey rsa:2048 -nodes \
+		-config ${where}/openssl.conf \
+		-keyout ${where}/vault.key \
+		-out    ${where}/vault.pem) || exit 1
+	echo
+	echo "DONE"
+	cat > ${where}/credentials.yml <<EOF
+---
+properties:
+  listener:
+    tcp:
+      tls:
+        certificate: (( vault meta.vault_prefix "tls:certificate" ))
+        key:         (( vault meta.vault_prefix "tls:key" ))
+EOF
+
+	#safe write "${VAULT_PREFIX}/tls" "certificate@${where}/vault.pem" "key@${where}/vault.key"
+	tail -n100 ${where}/vault.key ${where}/vault.pem
+	rm -fr ${where}
+esac
+
+
