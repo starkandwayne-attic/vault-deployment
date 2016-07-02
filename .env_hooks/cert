@@ -53,11 +53,14 @@ EOF
 	cat > ${DEPLOYMENT_ROOT}/${DEPLOYMENT_SITE}/${DEPLOYMENT_ENVIRONMENT}/credentials.yml <<EOF
 ---
 properties:
-  listener:
-    tcp:
-      tls:
-        certificate: (( vault meta.vault_prefix "tls:certificate" ))
-        key:         (( vault meta.vault_prefix "tls:key" ))
+  vault:
+    ha:
+      domain: (( param "Specify the domain your vault servers are in" ))
+    listener:
+      tcp:
+        tls:
+          certificate: (( vault meta.vault_prefix "tls:certificate" ))
+          key:         (( vault meta.vault_prefix "tls:key" ))
 EOF
 
 	safe write "${VAULT_PREFIX}/tls" "certificate@${where}/vault.pem" "key@${where}/vault.key"
