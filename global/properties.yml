@@ -1,1 +1,5 @@
---- {}
+---
+properties:
+  vault:
+    ha:
+      domain: (( param "What fully-qualified domain name do you want to access your Vault at?" ))

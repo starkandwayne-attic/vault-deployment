@@ -54,8 +54,6 @@ EOF
 ---
 properties:
   vault:
-    ha:
-      domain: (( param "Specify the domain your vault servers are in" ))
     listener:
       tcp:
         tls:
