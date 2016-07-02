@@ -1,4 +1,5 @@
 #!/bin/bash
+trap "exit 1" INT TERM QUIT
 
 echo
 echo
@@ -9,6 +10,19 @@ case ${CONFIRM} in
 	echo
 	echo "OK"
 	echo
+
+	if [[ -f ~/.saferc ]]; then
+		safe target
+		echo -n "Is this the Vault you wish to store this Vault's certificate/key in?  [yes/no] "
+		read CONFIRM
+		if [[ ${CONFIRM} != "yes" ]]; then
+			echo "Bailing."
+			exit 1
+		fi
+	else
+		echo "No ~/.saferc detected.  You may need to run a proto-Vault, locally..."
+		exit 1
+	fi
 
 	where=${DEPLOYMENT_ROOT}/${DEPLOYMENT_SITE}/${DEPLOYMENT_ENVIRONMENT}/.tls
 	mkdir ${where}
@@ -35,8 +49,8 @@ EOF
 		-keyout ${where}/vault.key \
 		-out    ${where}/vault.pem) || exit 1
 	echo
-	echo "DONE"
-	cat > ${where}/credentials.yml <<EOF
+
+	cat > ${DEPLOYMENT_ROOT}/${DEPLOYMENT_SITE}/${DEPLOYMENT_ENVIRONMENT}/credentials.yml <<EOF
 ---
 properties:
   listener:
@@ -46,8 +60,11 @@ properties:
         key:         (( vault meta.vault_prefix "tls:key" ))
 EOF
 
-	#safe write "${VAULT_PREFIX}/tls" "certificate@${where}/vault.pem" "key@${where}/vault.key"
-	tail -n100 ${where}/vault.key ${where}/vault.pem
+	safe write "${VAULT_PREFIX}/tls" "certificate@${where}/vault.pem" "key@${where}/vault.key"
+	echo
+	echo "DONE"
+	echo
+	echo
 	rm -fr ${where}
 esac
 
