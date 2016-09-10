@@ -1,0 +1,36 @@
+---
+meta:
+  google:
+    zones:
+      z1: (( param "Define the z1 Google zone" ))
+      z2: (( param "Define the z2 Google zone" ))
+      z3: (( param "Define the z3 Google zone" ))
+
+resource_pools:
+  - name: small_z1
+    network: vault_z1
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      zone: (( grab meta.google.zones.z1 ))
+      machine_type: n1-standard-2
+  - name: small_z2
+    network: vault_z2
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      zone: (( grab meta.google.zones.z2))
+      machine_type: n1-standard-2
+  - name: small_z3
+    network: vault_z3
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      zone: (( grab meta.google.zones.z3 ))
+      machine_type: n1-standard-2
+
+compilation:
+  network: vault_z1
+  workers: 1
+  reuse_compilation_vms: true
+
+  cloud_properties:
+    machine_type: n1-standard-4
+    zone: (( grab meta.google.zones.z1 ))

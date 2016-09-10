@@ -1,0 +1,11 @@
+---
+networks:
+- name: vault_z1
+  type: manual
+  subnets: (( param "Specify the z1 subnetwork for vault" ))
+- name: vault_z2
+  type: manual
+  subnets: (( param "Specify the z2 subnetwork for vault" ))
+- name: vault_z3
+  type: manual
+  subnets: (( param "Specify the z3 subnetwork for vault" ))
