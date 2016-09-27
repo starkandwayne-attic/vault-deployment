@@ -1,3 +1,8 @@
 ---
 meta:
   vault_servers: (( grab jobs.vault.networks.vault.static_ips ))
+
+properties:
+  vault:
+    ha:
+      domain: 10.244.8.2.sslip.io
