@@ -1,0 +1,22 @@
+---
+resource_pools:
+  - name: small
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      cpu:  1
+      ram:  1_024
+      disk: 2_048
+    env:
+      vapp: (( grab meta.type ))
+
+compilation:
+  network: vault
+  workers: 1
+  reuse_compilation_vms: true
+  cloud_properties:
+    cpu:  2
+    ram:  2_048
+    disk: 4_096
+  env:
+    vapp: (( grab meta.type ))
