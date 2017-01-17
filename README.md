@@ -59,9 +59,19 @@ Google Cloud Platform (Google) Sites
 ======================================
 
 The `google` template will set you up with a structure suitable for
-deploying BOSH directors to Google Cloud Plaftorm infrastructure.
+deploying Vault to Google Cloud Plaftorm infrastructure.
 
     genesis new site --template google <name>
+
+
+
+vCloud Director (vCloud) Sites
+======================================
+
+The `vcloud` template will set you up with a structure suitable for
+deploying Vault to vCloud Director infrastructure.
+
+    genesis new site --template vcloud <name>
 
 
 
