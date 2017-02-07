@@ -1,0 +1,53 @@
+---
+meta:
+  azure:
+    availability_set: (( param "Set the availability set for your Vault VMs" ))
+    storage_accounts:
+      names:
+      - (( param "Set the storage account name for zone1 VMs" ))
+      - (( param "Set the storage account name for zone2 VMs" ))
+      - (( param "Set the storage account name for zone3 VMs" ))
+      type: Standard_LRS
+      # FIXME: do we need to specify this?
+      #location: (( param "What location should storage accounts be placed in?" ))
+
+resource_pools:
+  - name: vault_z1
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      instance_type: Standard_D1_v2
+      availability_set: (( grab meta.azure.availability_set ))
+      storage_account_name: (( grab meta.azure.storage_accounts.names.0 ))
+      storage_account_type: (( grab metaazure.storage_accounts.type ))
+      # FIXME: do we need to specify this?
+      #storage_account_location: (( grab meta.azure.storage_accounts.location ))
+  - name: vault_z2
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      instance_type: Standard_D1_v2
+      availability_set: (( grab meta.azure.availability_set ))
+      storage_account_name: (( grab meta.azure.storage_accounts.names.1 ))
+      storage_account_type: (( grab metaazure.storage_accounts.type ))
+      # FIXME: do we need to specify this?
+      #storage_account_location: (( grab meta.azure.storage_accounts.location ))
+  - name: vault_z3
+    network: vault
+    stemcell: (( grab meta.stemcell ))
+    cloud_properties:
+      instance_type: Standard_D1_v2
+      availability_set: (( grab meta.azure.availability_set ))
+      # FIXME: will bosh auto-create these storage accounts?
+      storage_account_name: (( grab meta.azure.storage_accounts.names.2 ))
+      storage_account_type: (( grab metaazure.storage_accounts.type ))
+      # FIXME: do we need to specify this?
+      #storage_account_location: (( grab meta.azure.storage_accounts.location ))
+
+compilation:
+  network: vault_z1
+  workers: 1
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: Standard_A2_v2
+    #FIXME: will this work without storage accounts set?
