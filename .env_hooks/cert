@@ -12,7 +12,7 @@ case ${CONFIRM} in
 	echo
 
 	if [[ -f ~/.saferc ]]; then
-		safe target
+		safe targets
 		echo -n "Is this the Vault you wish to store this Vault's certificate/key in?  [yes/no] "
 		read CONFIRM
 		if [[ ${CONFIRM} != "yes" ]]; then
